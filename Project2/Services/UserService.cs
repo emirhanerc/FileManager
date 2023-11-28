@@ -16,5 +16,14 @@ namespace Project2.Services
         {
             return _context.Users.FirstOrDefault(u => u.Name == username && u.Password == password);
         }
+
+        public void SetUser(User user) { 
+            _context.Users.Add(user);
+            _Save();
+        }
+
+        private void _Save() {
+            _context.SaveChanges();
+        }
     }
 }

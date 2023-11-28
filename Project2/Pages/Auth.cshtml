@@ -120,8 +120,8 @@
             <div class="login form">
                 <header>Login</header>
                 <form action="#">
-                    <input type="text" placeholder="Enter your email">
-                    <input type="password" placeholder="Enter your password">
+                    <input type="text" placeholder="Enter your username" id="inputUsername">
+                    <input type="password" placeholder="Enter your password" id="inputPassword">
                     <a href="#">Forgot password?</a>
                     <input id="buttonLgn" type="button" class="button" value="Login">
                 </form>
@@ -135,10 +135,11 @@
             <div class="registration form">
                 <header>Signup</header>
                 <form action="#">
-                    <input type="text" placeholder="Enter your email">
-                    <input type="password" placeholder="Create a password">
-                    <input type="password" placeholder="Confirm your password">
-                    <input type="button" class="button" value="Signup">
+                    <input id="registerUsername" type="text" placeholder="Enter your username">
+                    <input id="registerEmail" type="text" placeholder="Enter your email">                    
+                    <input id="registerPass" type="password" placeholder="Create a password">
+                    <input id="registerPass2" type="password" placeholder="Confirm your password">
+                    <input id="buttonRgstr" type="button" class="button" value="Signup">
                 </form>
                 <div class="signup">
                     <span class="signup">
@@ -154,16 +155,50 @@
     <script>
         //Javascript code
         var buttonLgn = document.getElementById('buttonLgn');
-
+        //Burda login butonumuzu dinliyoruz
         buttonLgn.addEventListener('click', function () {
+            //burda username ve passwordu alıyoruz userin girdiği
+            var username = document.getElementById('inputUsername').value;
+            var password = document.getElementById('inputPassword').value;
             $.ajax({
                 type: "POST",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("XSRF-TOKEN",
                         $('input:hidden[name="__RequestVerificationToken"]').val());
                 },
-                url: "/Auth?handler=GetAjax",
-                data: {'username':'admin','password':'812812'},
+                url: "/Auth?handler=Login",
+                data: { 'username': username, 'password': password },
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: "json",
+                success: function (msg) {
+                    alert(msg)
+                }
+            });
+        });
+
+        var buttonRgstr = document.getElementById('buttonRgstr');
+        //aynı işlemleri register için yapıyoruz
+        buttonRgstr.addEventListener('click', function () {
+            //burda username ve passwordu alıyoruz userin girdiği
+            var username = document.getElementById('registerUsername').value;
+            var email = document.getElementById('registerEmail').value;
+            var pass = document.getElementById('registerPass').value;
+            var pass2 = document.getElementById('registerPass2').value;
+
+            //burda girilen passlerin eşit olup olmadığını kontrol ediyoruz
+            if (pass!==pass2){
+                alert("Passwordlar eşleşmiyor!")
+                return 
+            }
+
+            $.ajax({
+                type: "POST",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                url: "/Auth?handler=Register",
+                data: { 'username': username, 'password': pass, 'email':email },
                 contentType: 'application/x-www-form-urlencoded',
                 dataType: "json",
                 success: function (msg) {
