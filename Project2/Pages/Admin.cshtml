@@ -1,0 +1,432 @@
+﻿@page
+@model Project2.Pages.AdminModel
+@Html.AntiForgeryToken()
+@{
+}
+
+
+<head>
+	<title>Admin</title>
+
+	<style>
+		body {
+			margin-top: 20px;
+			background-color: #f7f7ff;
+		}
+
+		.card {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			min-width: 0;
+			word-wrap: break-word;
+			background-color: #fff;
+			background-clip: border-box;
+			border: 0px solid rgba(0, 0, 0, 0);
+			border-radius: .25rem;
+			margin-bottom: 1.5rem;
+			box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+		}
+
+		.fm-file-box {
+			font-size: 25px;
+			background: #e9ecef;
+			width: 44px;
+			height: 44px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: .25rem;
+		}
+
+		.ms-2 {
+			margin-left: .5rem !important;
+		}
+
+		.fm-menu .list-group a {
+			font-size: 16px;
+			color: #5f5f5f;
+			display: flex;
+			align-items: center;
+		}
+
+		.list-group-flush > .list-group-item {
+			border-width: 0 0 1px;
+		}
+
+		.list-group-item + .list-group-item {
+			border-top-width: 0;
+		}
+
+		.py-1 {
+			padding-top: .25rem !important;
+			padding-bottom: .25rem !important;
+		}
+
+		.list-group-item {
+			position: relative;
+			display: block;
+			padding: .5rem 1rem;
+			text-decoration: none;
+			background-color: #fff;
+			border: 1px solid rgba(0, 0, 0, .125);
+		}
+
+		.radius-15 {
+			border-radius: 15px;
+		}
+
+		.fm-icon-box {
+			font-size: 32px;
+			background: #ffffff;
+			width: 52px;
+			height: 52px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: .25rem;
+		}
+
+		.font-24 {
+			font-size: 24px;
+		}
+
+		.ms-auto {
+			margin-left: auto !important;
+		}
+
+		.font-30 {
+			font-size: 30px;
+		}
+
+		.user-groups img {
+			margin-left: -14px;
+			border: 1px solid #e4e4e4;
+			padding: 2px;
+			cursor: pointer;
+		}
+
+		.rounded-circle {
+			border-radius: 50% !important;
+		}
+
+		#deleteBtn {
+			border: 1px solid #e4e4e4;
+		}
+
+		.col-12 col-lg-4{
+			display: flex;
+			align-items: center;
+		}
+
+		.btnCustom{
+			display: inline-block;
+			outline: none;
+			cursor: pointer;
+			font-size: 16px;
+			line-height: 20px;
+			font-weight: 600;
+			border-radius: 8px;
+			padding: 14px 24px;
+			border: none;
+			transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
+			background: linear-gradient(to right, rgb(230, 30, 77) 0%, rgb(227, 28, 95) 50%, rgb(215, 4, 102) 100%);
+			color: #fff;
+			margin-left: 20px;
+			margin-right: 20px;
+		}
+
+		.btnCustomOutlined{
+			display: inline-block;
+			outline: none;
+			cursor: pointer;
+			font-size: 16px;
+			line-height: 20px;
+			font-weight: 600;
+			border-radius: 8px;
+			padding: 13px 23px;
+			border: 1px solid #222222;
+			transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
+			background: #fff;
+			color: #222222;
+			: hover
+
+		{
+			border-color: #000000;
+			background: #f7f7f7;
+		}
+
+		}
+	</style>
+</head>
+<body>
+	<link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-12 col-lg-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="user-groups ms-auto">
+							<img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="60" height="60" style="margin-inline-start:1px" class="rounded-circle" alt="">
+						</div>
+						<h5 id="txtName" style="padding-left:10px">Emirhan</h5>
+						<div class="fm-menu">
+							<div class="list-group list-group-flush">
+								<button class="list-group-item py-1"  onclick="changeBoard('dashboard')">Dashboard</button>
+								<button class="list-group-item py-1" onclick="changeBoard('users')">Kullanıcılar</button>
+								<button class="list-group-item py-1" onclick="changeBoard('recent')">Son hareketler</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="boardUsers" class="col-12 col-lg-9" style="display:none">
+				<div class="card">
+					<div class="card-body">
+						<h5 id="title">Kullanıcılar</h5>
+						<div class="row mt-3" id="fileBody">
+							<!--Buraya kullanıcal eklenecek-->
+						</div>
+					</div>
+					<!--end row-->
+				</div>
+			</div>
+			<div id="boardRecent" class="col-12 col-lg-9" style="display:none">
+				<div class="card">
+					<div class="card-body">
+						<h5 id="title">Son hareketler</h5>
+						<div class="row mt-3" id="recentBody">
+						</div>
+					</div>
+					<!--end row-->
+				</div>
+			</div>
+			<div id="boardDashboard" class="col-12 col-lg-9" style="display:block">
+				<div class="card">
+					<div class="card-body">
+						<h5 id="title">Dashboard</h5>
+						<div class="row mt-3" id="recentBody">
+							<!--Dashboard body-->
+
+							<div class="col-12 col-lg-4">
+								<div class="card shadow-none border radius-15">
+									<div class="card-body">
+										<div class="d-flex align-items-center">
+											<div class="fm-icon-box radius-15 bg-primary text-white">
+												<i class="bx bx-user me-2 font-30 text-black" style="margin-left:9px; margin-top: 2px"></i>
+											</div>
+											<div class="ms-auto font-24">
+												<i class="fa fa-ellipsis-h"></i>
+											</div>
+										</div>
+										<h5 class="mt-3 mb-0">Toplam Kullanıcı Sayısı</h5>
+										<p class="mb-1 mt-4">
+											<h5 id="txtUserCount">0</h5> 
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-lg-4">
+								<div class="card shadow-none border radius-15">
+									<div class="card-body">
+										<div class="d-flex align-items-center">
+											<div class="fm-icon-box radius-15 bg-danger text-white">
+												<i class="bx bx-folder me-2 font-30 text-black" style="margin-left:9px; margin-top: 2px"></i>
+											</div>
+											<div class="ms-auto font-24">
+												<i class="fa fa-ellipsis-h"></i>
+											</div>
+										</div>
+										<h5 class="mt-3 mb-0">Dosya Sayısı</h5>
+										<p class="mb-1 mt-4">
+											<h5 id="txtFileCount">0</h5>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-lg-4">
+								<div class="card shadow-none border radius-15">
+									<div class="card-body">
+										<div class="d-flex align-items-center">
+											<div class="fm-icon-box radius-15 bg-warning text-white">
+												<i class="bx bx-data me-2 font-30 text-black" style="margin-left:9px; margin-top: 2px"></i>
+											</div>
+											<div class="ms-auto font-24">
+												<i class="fa fa-ellipsis-h"></i>
+											</div>
+										</div>
+										<h5 class="mt-3 mb-0">Toplam Dosya Boyutu</h5>
+										<p class="mb-1 mt-4">
+											<h5 id="txtSize">0</h5>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-lg-4">
+								<div class="card shadow-none border radius-15">
+									<div class="card-body">
+										<div class="d-flex align-items-center">
+											<div class="fm-icon-box radius-15 bg-info text-white">
+												<i class="bx bx-user-plus me-2 font-30 text-black" style="margin-left:9px; margin-top: 2px"></i>
+											</div>
+											<div class="ms-auto font-24">
+												<i class="fa fa-ellipsis-h"></i>
+											</div>
+										</div>
+										<h5 class="mt-3 mb-0">Yeni Kullanıcı Sayısı</h5>
+										<p class="mb-1 mt-4">
+											<h5 id="txtNewUserCount">0</h5>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--end row-->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+@section Scripts {
+	<script>
+		const urlParams = new URLSearchParams(window.location.search);
+		const token = urlParams.get('token');
+
+		function addUserToHtml(userName, fileCount,userToken) {
+			var newDiv = document.createElement("div");
+
+			newDiv.innerHTML = `
+							<div id="${userToken}">
+									<div class="card shadow-none border radius-15">
+													<div class="card-body">
+														<div class="d-flex align-items-center">
+															<div class="font-30 text-primary">
+																<i class="bx bxs-avatar"></i>
+															</div>
+															<h5>${userName}</h5>
+															<div class="user-groups ms-auto">
+																<img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="35" height="35" class="rounded-circle" alt="">
+															</div>
+																					<div data-value='${userToken}'>
+																					<button class="btnCustom" onclick=seeProfile(this)>Profili Gör</button>
+																					<button class="btnCustomOutlined" onclick=deleteUser(this)>Kullanıcıyı sil</button>
+																			</div>
+														</div>
+														<h6 class="mb-0 text-primary">Dosyalar</h6>
+														<small>${fileCount} dosya</small>
+													</div>
+												</div>
+												
+							</div>
+
+											`
+
+			var container = document.getElementById("fileBody");
+
+			container.appendChild(newDiv);
+		}
+
+		function addRecentToHtml(txt) {
+			var newDiv = document.createElement("div");
+
+			newDiv.innerHTML = `
+									<h6>${txt}</h6>
+
+													`
+
+			var container = document.getElementById("recentBody");
+
+			container.appendChild(newDiv);
+		}
+
+		function seeProfile(button){
+			var div = button.closest('div');
+			const val = div.getAttribute("data-value")
+
+			window.location.href = '/Manager?token=' + val + '&fromAdmin=true';
+		}
+
+		function deleteUser(button) {
+			var div = button.closest('div');
+			const val = div.getAttribute("data-value")
+
+			$.ajax({
+				type: "POST",
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("XSRF-TOKEN",
+						$('input:hidden[name="__RequestVerificationToken"]').val());
+				},
+				url: "/Admin?handler=DeleteUser",
+				data: { 'token': val },
+				contentType: 'application/x-www-form-urlencoded',
+				dataType: "json",
+				success: function (msg) {
+					if(msg === "200"){
+						document.getElementById(val).remove()
+						alert("Kullanıcı ve dosyaları başarı ile silindi")
+					}
+				}
+			});
+		}
+
+		function changeBoard(type) {
+			document.getElementById("boardRecent").style.display = "none"
+			document.getElementById("boardUsers").style.display = "none"
+			document.getElementById("boardDashboard").style.display = "none"
+
+			if (type === "recent") {
+				document.getElementById("boardRecent").style.display = "block"
+			} else if (type === "users") {
+				document.getElementById("boardUsers").style.display = "block"
+			} else if (type === "dashboard") {
+				document.getElementById("boardDashboard").style.display = "block"
+			}
+		}
+
+		function loadDatas() {
+			$.ajax({
+				type: "POST",
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("XSRF-TOKEN",
+						$('input:hidden[name="__RequestVerificationToken"]').val());
+				},
+				url: "/Admin?handler=LoadDatas",
+				data: { 'token': token },
+				contentType: 'application/x-www-form-urlencoded',
+				dataType: "json",
+				success: function (msg) {
+					if(msg === "500"){
+						alert("Yetkiniz yok!")
+						window.location.href = '/';
+						return
+					}
+
+					document.getElementById("txtName").innerText = msg.name;
+					document.getElementById("title").innerText = "Kullanıcılar: " + msg.users.length.toString()
+
+					msg.users.forEach(function (element, index, array) {
+						if (element.token !== token) {
+							addUserToHtml(element.name, element.fileCount, element.token)
+
+						}
+					});
+
+					msg.logs.forEach(function (element, index, array) {
+						addRecentToHtml(element)
+					});
+
+					document.getElementById("txtUserCount").innerText = msg.userCount
+					document.getElementById("txtFileCount").innerText = msg.fileCount
+					document.getElementById("txtSize").innerText = msg.fileSize
+					document.getElementById("txtNewUserCount").innerText = msg.newUsersCount
+				}
+			});
+		}
+
+		loadDatas()
+	</script>
+ }

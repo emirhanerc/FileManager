@@ -11,5 +11,7 @@ namespace Project2.DAL
         }
 
         public DbSet<User> Users { get; set; }
-    }
+        public DbSet<FileModel> Files { get; set; }
+        public DbSet<Log> Logs { get; set; }
+	}
 }

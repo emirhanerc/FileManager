@@ -20,6 +20,19 @@
                 background: #009579;
             }
 
+		#rememberMe {
+            width: 20px;
+            -webkit-appearance: checkbox;
+            -moz-appearance: checkbox;
+            appearance: checkbox;
+            margin-top: 15px;
+        }
+
+        #divCheckBox{
+            display: flex;
+            align-items: center; /* Align items vertically in the center */
+        }
+
             .container {
                 position: absolute;
                 top: 50%;
@@ -122,6 +135,9 @@
                 <form action="#">
                     <input type="text" placeholder="Enter your username" id="inputUsername">
                     <input type="password" placeholder="Enter your password" id="inputPassword">
+                    <div id="divCheckBox">
+                    <input type="checkbox" value="lsRememberMe" id="rememberMe"> <label for="rememberMe" style="padding:5px">Beni hatırla</label>
+                    </div>
                     <a href="#">Forgot password?</a>
                     <input id="buttonLgn" type="button" class="button" value="Login">
                 </form>
@@ -154,12 +170,41 @@
     @section Scripts{
     <script>
         //Javascript code
+
+        //sayfa yüklendiğinde bu kod çalışacak
+        window.onload = function () {
+            var rememberedUsername = localStorage.getItem('username');
+            var rememberedPassword = localStorage.getItem('password');
+
+            if (rememberedUsername && rememberedPassword) {
+                // eğer cookilerde username ve password varsa onları html e gönderiyoruz
+                document.getElementById('inputUsername').value = rememberedUsername;
+                document.getElementById('inputPassword').value = rememberedPassword;
+                document.getElementById('rememberMe').checked = true;
+            }
+        };
+
+
         var buttonLgn = document.getElementById('buttonLgn');
         //Burda login butonumuzu dinliyoruz
         buttonLgn.addEventListener('click', function () {
             //burda username ve passwordu alıyoruz userin girdiği
             var username = document.getElementById('inputUsername').value;
             var password = document.getElementById('inputPassword').value;
+
+
+            var rememberMe = document.getElementById('rememberMe').checked;
+            //eğer beni hatırla butonu tikle ise cookilere kaydediyoruz
+            if (rememberMe) {
+                localStorage.setItem('username', username);
+                localStorage.setItem('password', password);
+            } else {
+                // eğer beni hatırla tikli değilse cookiyi temizliyoruz
+                localStorage.removeItem('username');
+                localStorage.removeItem('password');
+            }
+
+            
             $.ajax({
                 type: "POST",
                 beforeSend: function (xhr) {
@@ -171,7 +216,11 @@
                 contentType: 'application/x-www-form-urlencoded',
                 dataType: "json",
                 success: function (msg) {
-                    alert(msg)
+                    if (msg.status === "200") {
+                        window.location.href = '/Manager?token='+msg.token;
+                    } else {
+                        alert(msg.error)
+                    }
                 }
             });
         });
@@ -187,7 +236,7 @@
 
             //burda girilen passlerin eşit olup olmadığını kontrol ediyoruz
             if (pass!==pass2){
-                alert("Passwordlar eşleşmiyor!")
+                alert("Şifreler eşleşmiyor!")
                 return 
             }
 
@@ -202,7 +251,11 @@
                 contentType: 'application/x-www-form-urlencoded',
                 dataType: "json",
                 success: function (msg) {
-                    alert(msg)
+                    if (msg.status === "200") {
+                        window.location.href = '/Manager?token='+msg.token;
+                    } else {
+                        alert(msg.error)
+                    }
                 }
             });
         });

@@ -19,6 +19,8 @@ namespace Project2.Pages
 
         public IActionResult OnPostLogin(Dictionary<String,String> val)
         {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
             string username = val["username"];
             string password = val["password"];
 
@@ -26,10 +28,18 @@ namespace Project2.Pages
 
             if (u==null)
             {
-                return new JsonResult("Username veya password hatalý!");
+                result["status"] = "300";
+                result["error"] = "Kullanýcý adý ve þifre yanlýþ";
+
+                return new JsonResult(result);
             }
 
-            return new JsonResult("succesed");
+
+            result["token"] = u.Token;
+            result["status"] = "200";
+
+            //burda 200 döndürüyoruz. yani OK demek
+            return new JsonResult(result);
         }
 
         public IActionResult OnPostRegister(Dictionary<String, String> val)
@@ -45,12 +55,18 @@ namespace Project2.Pages
             user.IsAdmin = 0;
             string token = _GenerateRandomString();
             user.Token = token;
+            user.CreatedAt = DateTime.Now;
 
             _userService.SetUser(user);
 
-            
+
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            result["token"] = user.Token;
+            result["status"] = "200";
+
             //burda 200 döndürüyoruz. yani OK demek
-            return new JsonResult("200");
+            return new JsonResult(result);
         }
 
         private string _GenerateRandomString()

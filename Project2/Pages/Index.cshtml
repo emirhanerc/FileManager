@@ -1,49 +1,93 @@
 ﻿@page
 @model Project2.Pages.IndexModel
-
 @{
-    ViewData["Title"] = "Index";
-    Layout = "Login";
+    ViewData["Title"] = "Home page";
 }
 
-<h1>Index</h1>
+<html>
+<head>
+    <title>FileManager</title>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].Token)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].Password)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.User) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Token)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <style>
+        html {
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .vertical-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .vertical-box {
+            padding: 50px;
+            margin: 5px;
+        }
+
+        a {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+            a > .btn {
+                transform: translateX(0%) translateY(0%);
+                transition: 0.3s ease-in-out;
+            }
+
+            a:hover > #btn1 {
+                transform: translateX(-5%) translateY(-24%);
+                transition: 0.3s ease-in-out;
+            }
+
+            a:hover > #btn2 {
+                transform: translateX(-2%) translateY(-12%);
+                transition: 0.3s ease-in-out;
+            }
+
+        .btn {
+            position: absolute;
+            width: 288px;
+            height: 70px;
+            color: white;
+            font-size: 1.5rem;
+            border: solid 2px black;
+            border-radius: 4px;
+        }
+
+        #btn1 {
+            background: black;
+            z-index: 3;
+        }
+
+        #btn2 {
+            background: yellow;
+            z-index: 2;
+        }
+
+        #btn3 {
+            background: maroon;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="vertical-container">
+        <h3 class="vertical-box">Dosyalarını düzenlemeniz için size yardım edeceğiz!</h3>
+        <div class="wrap">
+            <a href="/Auth">
+                <button class="btn" id="btn1"> Başla </button>
+                <button class="btn" id="btn2"></button>
+                <button class="btn" id="btn3"></button>
+        </div>
+        </a>
+    </div>
+
+
+</body>
+</html>

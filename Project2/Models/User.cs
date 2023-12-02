@@ -8,5 +8,6 @@
         public string Token { get; set; }
         public string Password { get; set; }
         public int IsAdmin { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
