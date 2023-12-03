@@ -8,6 +8,8 @@
 <head>
 	<title>FileManager</title>
 
+	<link ref="stylesheet" type="text/css" href="~/../Public/SnackBar-master/dist/snackbar.min.css"/>
+	<script src="~/../Public/SnackBar-master/dist/snackbar.min.js"></script>
 	<style>
 		body {
 			margin-top: 20px;
@@ -186,8 +188,6 @@
 	</style>
 </head>
 <body>
-	<link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
-	<link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
 
 	<div class="container">
 		<div class="row">
@@ -342,7 +342,6 @@
 			window.location.href = '/';
 		}
 
-
 		function onAddBtn() {
 			const f = getSelectedFile()
 			//eğer herhangi bir file seçilmediyse return yapıyoruz
@@ -448,6 +447,8 @@
 				size:selectedFile.size.toString()
 			};
 		}
+
+		
 
 		$.ajax({
 			type: "POST",
