@@ -11,6 +11,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer("Server=EMIRHAN\\SQLEXPRESS;Database=filemanager;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true"));
 
+//bu kodu çalýþtýrýyoruz yoksa Ajax 400 hatasý verir çalýþmaz
 builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
 var app = builder.Build();

@@ -1,0 +1,51 @@
+-- Create Database
+CREATE DATABASE filemanager;
+GO
+
+-- Use the Database
+USE filemanager;
+GO
+
+-- Create Users Table
+-- [dbo].[Files]
+CREATE TABLE Files (
+    [Id]        INT        IDENTITY (1, 1) NOT NULL,
+    [UserToken] NCHAR (15) NULL,
+    [Size]      INT        NULL,
+    [Name]      NCHAR (60) NULL,
+    [Type]      NCHAR (15) NULL,
+    [CreatedAt] DATETIME   NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+GO
+
+-- Create Orders Table
+-- [dbo].[Logs]
+CREATE TABLE Logs (
+    [Id]        INT         IDENTITY (1, 1) NOT NULL,
+    [Name]      NCHAR (20)  NULL,
+    [CreatedAt] DATETIME    NULL,
+    [Message]   NCHAR (200) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+GO
+
+-- Create OrderItems Table
+-- [dbo].[Users]
+CREATE TABLE Users (
+    [Id]        INT           IDENTITY (1, 1) NOT NULL,
+    [Name]      NCHAR (20)    NOT NULL,
+    [Password]  NCHAR (20)    NOT NULL,
+    [Token]     NCHAR (15)    NOT NULL,
+    [IsAdmin]   INT           NOT NULL,
+    [Email]     VARCHAR (255) NULL,
+    [CreatedAt] DATETIME      NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+GO
+
+//BURAYI ELLE YAP
+UPDATE Users
+SET IsAdmin = 1
+WHERE Name = 'ali';
